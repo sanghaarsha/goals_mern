@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 
 const protect = asyncHandler(async (req, res, next) => {
-    let generateToken;
+    let token;
     if (
         req.headers.authorization &&
         req.headers.authorization.startsWith("Bearer")
@@ -19,13 +19,13 @@ const protect = asyncHandler(async (req, res, next) => {
         } catch (err) {
             console.log(err);
             res.status(401);
-            throw new err("Not Authorized");
+            throw new Error("Not Authorized");
         }
     }
 
     if (!token) {
         res.status(401);
-        throw new err("Not Authorized, no token!");
+        throw new Error("Not Authorized, no token!");
     }
 });
 
